@@ -1,4 +1,3 @@
-
 import { Product, Ingredient } from './types';
 
 export const INGREDIENTS: Ingredient[] = [
@@ -38,31 +37,33 @@ export const PRODUCTS: Product[] = [
   {
     id: "dew-stick",
     name: "The Dew Stick",
-    price: 18,
-    description: "All-day moisture with a sheer, dewy finish. Perfect for daily hydration and a natural glow.",
-    image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop",
-    textureVideo: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnhic2R6ZTZ4ZWZ6Z2Z6Z2Z6Z2Z6Z2Z6Z2Z6Z2Z6Z2Z6Z2Z6Zm0mZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0PWc/3o7TKMGpxXzUWy9pW8/giphy.gif",
+    price: 1499,
+    description: "All-day moisture with a sheer, dewy finish. Powered by Plant-based Hyaluronic Acid.",
+    image: "https://i.ibb.co/twdxvzTy/Screenshot-2026-02-13-172401.png",
+    textureVideo: "https://images.unsplash.com/photo-1611082231242-26396ef335cd?q=80&w=1000&auto=format&fit=crop",
     ingredients: INGREDIENTS.slice(0, 4),
     reviews: 142,
     rating: 5,
     bestSeller: true
   },
   {
-    id: "bloom-balm",
-    name: "Bloom Balm",
-    price: 22,
-    description: "A buildable berry tint with antioxidant protection. Infused with natural pigments for a healthy flush.",
-    image: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=1000&auto=format&fit=crop",
-    ingredients: INGREDIENTS.slice(1, 5),
-    reviews: 89,
-    rating: 4.5
+    id: "natural-lipstick",
+    name: "Natural Lipstick",
+    price: 2499,
+    description: "A luxury satin finish lipstick enriched with botanical pigments and organic Jojoba oil.",
+    image: "https://i.ibb.co/ccr3qvj8/Screenshot-2026-02-13-172938.png",
+    textureVideo: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?q=80&w=1000&auto=format&fit=crop",
+    ingredients: [INGREDIENTS[1], INGREDIENTS[2], INGREDIENTS[4]],
+    reviews: 56,
+    rating: 4.8
   },
   {
     id: "night-mask",
     name: "The Night Mask",
-    price: 26,
-    description: "Overnight repair with ultra-pure botanical oils. Wake up to soft, rejuvenated lips.",
-    image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1000&auto=format&fit=crop",
+    price: 2199,
+    description: "Deep repair with Cupuaçu Butter and a calming lavender scent.",
+    image: "https://i.ibb.co/kV3csC8X/Screenshot-2026-02-13-172249.png",
+    textureVideo: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1000&auto=format&fit=crop",
     ingredients: INGREDIENTS.slice(0, 3),
     reviews: 210,
     rating: 5

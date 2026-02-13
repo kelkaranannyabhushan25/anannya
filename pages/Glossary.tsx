@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Search, Info, X } from 'lucide-react';
 import { INGREDIENTS } from '../constants';
@@ -18,7 +17,7 @@ const Glossary: React.FC = () => {
         <div className="max-w-4xl mx-auto text-center">
           <span className="text-sage font-black uppercase tracking-[0.3em] text-[10px] mb-6 block">The Flora Filter</span>
           <h1 className="text-5xl lg:text-7xl font-serif italic mb-8">Ingredient Glossary</h1>
-          <p className="text-lg text-charcoal/70 mb-12">
+          <p className="text-lg text-charcoal/70 mb-12 leading-relaxed">
             Explore the strictly plant-derived ingredients that make our formulas so effective. No secrets, no synthetic fillers—just pure transparency.
           </p>
           
@@ -53,10 +52,10 @@ const Glossary: React.FC = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filtered.map(ing => (
-                <div key={ing.name} className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-sage/5 hover:shadow-xl transition-all">
+                <div key={ing.name} className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-sage/10 hover:shadow-xl transition-all group">
                   <div className="flex items-start justify-between mb-6">
                     <div>
-                      <h3 className="text-2xl font-serif italic mb-2">{ing.name}</h3>
+                      <h3 className="text-2xl font-serif italic mb-2 group-hover:text-sage transition-colors">{ing.name}</h3>
                       <span className="text-[10px] font-black uppercase tracking-widest text-sage bg-sage/5 px-2 py-1 rounded">
                         {ing.function}
                       </span>
@@ -73,7 +72,7 @@ const Glossary: React.FC = () => {
                     </div>
                     <div>
                       <h4 className="text-[10px] font-bold uppercase tracking-widest text-charcoal/40 mb-2">Benefit</h4>
-                      <p className="text-sm text-charcoal/70 leading-relaxed italic">"{ing.benefit}"</p>
+                      <p className="text-sm text-charcoal/70 leading-relaxed italic group-hover:text-sage transition-colors">"{ing.benefit}"</p>
                     </div>
                   </div>
                 </div>
@@ -85,7 +84,7 @@ const Glossary: React.FC = () => {
 
       {/* Sustainability Banner */}
       <section className="py-32 px-6">
-        <div className="max-w-7xl mx-auto bg-sage rounded-[3rem] p-12 lg:p-24 text-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto bg-sage rounded-[3rem] p-12 lg:p-24 text-white relative overflow-hidden shadow-2xl">
           <div className="max-w-2xl relative z-10">
             <h2 className="text-4xl lg:text-5xl font-serif italic mb-8">Synthetic vs. Natural</h2>
             <p className="text-lg opacity-90 leading-relaxed mb-10">
