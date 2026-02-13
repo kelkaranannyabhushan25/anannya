@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vela Flora | Skincare for your Smile</title>
+  <title>Vela Flora | Pure Botanical Lip Care</title>
   
   <!-- UI Framework (Tailwind CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -36,10 +36,13 @@
   </script>
 
   <style>
-    body { background-color: #F5F5DC; color: #1A1A1A; scroll-behavior: smooth; }
+    body { background-color: #F5F5DC; color: #1A1A1A; scroll-behavior: smooth; overflow-x: hidden; }
     
-    @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
-    .animate-slide-in { animation: slideInRight 0.3s ease-out forwards; }
+    @keyframes slideInRight { 
+      from { transform: translateX(100%); opacity: 0; } 
+      to { transform: translateX(0); opacity: 1; } 
+    }
+    .animate-slide-in { animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -60,6 +63,14 @@
       transition: all 0.3s ease;
       pointer-events: none;
     }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 <script type="importmap">
 {
@@ -75,35 +86,37 @@
 </head>
 <body class="font-sans antialiased text-[#1A1A1A]">
 
-  <!-- Navbar -->
-  <header class="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md px-6 py-4 lg:px-12 border-b border-charcoal/5">
-    <nav class="max-w-[1600px] mx-auto flex items-center justify-between">
+  <!-- Announcement Bar -->
+  <div class="bg-sage text-white text-[10px] font-bold uppercase tracking-[0.3em] py-2 text-center">
+    Free Shipping on all orders over ₹3,000
+  </div>
+
+  <!-- Navigation -->
+  <header class="fixed top-8 left-0 right-0 z-40 px-6 lg:px-12">
+    <nav class="max-w-[1600px] mx-auto flex items-center justify-between bg-white/80 backdrop-blur-md rounded-2xl border border-charcoal/5 px-8 py-4 shadow-sm">
       <div class="hidden lg:flex items-center space-x-10 flex-1">
-        <a href="#" id="nav-shop" class="text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal/40 hover:text-terracotta transition-colors">Shop All</a>
-        <a href="#" id="nav-ingredients" class="text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal/40 hover:text-terracotta transition-colors">Our Ingredients</a>
-        <a href="#" class="text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal/40 hover:text-terracotta transition-colors">Sustainability</a>
+        <button onclick="router.navigate('home')" class="text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal/40 hover:text-terracotta transition-colors">Shop All</button>
+        <button onclick="router.navigate('glossary')" class="text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal/40 hover:text-terracotta transition-colors">Ingredients</button>
+        <button class="text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal/40 hover:text-terracotta transition-colors">Story</button>
       </div>
 
-      <a href="#" id="nav-logo" class="text-xl font-black tracking-tighter uppercase flex items-center text-charcoal">
+      <button onclick="router.navigate('home')" class="text-xl font-black tracking-tighter uppercase flex items-center text-charcoal">
         VELA<span class="text-terracotta">FLORA</span>
-      </a>
+      </button>
 
       <div class="flex items-center justify-end space-x-2 lg:space-x-6 flex-1">
         <button class="p-2 text-charcoal/40 hover:text-terracotta"><i data-lucide="search" class="w-4 h-4"></i></button>
-        <button class="p-2 text-charcoal/40 hover:text-terracotta relative" id="cart-btn">
+        <button onclick="ui.toggleCart(true)" class="p-2 text-charcoal/40 hover:text-terracotta relative">
           <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-          <span id="cart-badge" class="hidden absolute top-1 right-1 bg-terracotta text-white text-[7px] w-3 h-3 rounded-full flex items-center justify-center font-bold">0</span>
+          <span id="cart-badge" class="hidden absolute -top-1 -right-1 bg-terracotta text-white text-[7px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
         </button>
       </div>
     </nav>
   </header>
 
-  <!-- Mount Point (Implicitly used by logic) -->
-  <div id="root"></div>
-
-  <!-- Main View Containers -->
-  <main class="pt-20">
-    <div id="view-home" class="view-section active"></div>
+  <!-- Content Slots -->
+  <main class="pt-24 min-h-screen">
+    <div id="view-home" class="view-section"></div>
     <div id="view-product" class="view-section"></div>
     <div id="view-glossary" class="view-section"></div>
   </main>
@@ -112,45 +125,338 @@
   <footer class="bg-white pt-24 pb-12 border-t border-charcoal/5 px-12 mt-20">
     <div class="max-w-[1600px] mx-auto text-center">
       <h2 class="text-xl font-black tracking-tighter uppercase mb-6">VELA<span class="text-terracotta">FLORA</span></h2>
+      <div class="flex justify-center gap-8 mb-12 text-[10px] font-bold uppercase tracking-widest text-charcoal/30">
+        <a href="#" class="hover:text-sage">Instagram</a>
+        <a href="#" class="hover:text-sage">Sustainability</a>
+        <a href="#" class="hover:text-sage">Returns</a>
+      </div>
       <p class="text-[9px] font-bold uppercase tracking-[0.2em] text-charcoal/20">© 2024 VELA FLORA BEAUTY. ALL RIGHTS RESERVED.</p>
     </div>
   </footer>
 
-  <!-- Overlays -->
+  <!-- Cart Drawer -->
   <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
-    <div id="cart-overlay" class="absolute inset-0 bg-charcoal/40 backdrop-blur-sm"></div>
+    <div onclick="ui.toggleCart(false)" class="absolute inset-0 bg-charcoal/40 backdrop-blur-md"></div>
     <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-white shadow-2xl flex flex-col animate-slide-in">
-      <div class="p-6 border-b flex items-center justify-between">
-        <h2 class="text-xl font-serif italic text-sage">Your Flora Cart</h2>
-        <button id="close-cart" class="p-2 hover:bg-cream rounded-full"><i data-lucide="x"></i></button>
+      <div class="p-8 border-b border-charcoal/5 flex items-center justify-between">
+        <h2 class="text-2xl font-serif italic text-sage">Garden Bag</h2>
+        <button onclick="ui.toggleCart(false)" class="p-2 hover:bg-cream rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-      <div id="free-shipping-bar" class="p-6 bg-cream border-b border-sage/10"></div>
-      <div id="cart-items" class="flex-grow overflow-y-auto p-6 space-y-8 no-scrollbar"></div>
-      <div id="cart-footer" class="p-6 border-t bg-cream"></div>
+      <div id="free-shipping-bar" class="p-8 bg-cream border-b border-sage/10"></div>
+      <div id="cart-items" class="flex-grow overflow-y-auto p-8 space-y-8 no-scrollbar"></div>
+      <div id="cart-footer" class="p-8 border-t bg-white"></div>
     </div>
   </div>
 
-  <!-- Assistant UI -->
-  <div class="fixed bottom-6 right-6 z-50">
-    <button id="ai-toggle" class="w-14 h-14 rounded-full bg-sage text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-all">
-      <i data-lucide="message-circle" class="w-5 h-5"></i>
+  <!-- AI Assistant -->
+  <div class="fixed bottom-8 right-8 z-50">
+    <button id="ai-toggle" class="w-16 h-16 rounded-full bg-sage text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-all group">
+      <i data-lucide="flower" class="w-6 h-6 group-hover:rotate-45 transition-transform"></i>
     </button>
-    <div id="ai-window" class="absolute bottom-20 right-0 w-[90vw] max-w-[360px] h-[520px] bg-white rounded-[2.5rem] shadow-2xl border hidden flex-col overflow-hidden animate-slide-in">
+    <div id="ai-window" class="absolute bottom-24 right-0 w-[90vw] max-w-[380px] h-[520px] bg-white rounded-[2.5rem] shadow-2xl border border-sage/10 hidden flex-col overflow-hidden animate-slide-in">
       <div class="p-6 bg-sage flex items-center gap-4 text-white">
         <div class="w-8 h-8 rounded-full bg-white text-sage flex items-center justify-center"><i data-lucide="sparkles" class="w-4 h-4"></i></div>
         <div>
           <h3 class="font-bold uppercase tracking-widest text-[9px]">Flora Guide</h3>
-          <p class="text-[8px] uppercase font-black">Botanical Soul</p>
+          <p class="text-[7px] uppercase font-black opacity-60">Botanical AI Specialist</p>
         </div>
-        <button id="close-ai" class="ml-auto"><i data-lucide="x" class="w-4 h-4"></i></button>
+        <button onclick="ui.toggleAI(false)" class="ml-auto hover:bg-white/10 p-1 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
       </div>
       <div id="ai-messages" class="flex-grow p-6 space-y-4 overflow-y-auto bg-cream/30 no-scrollbar"></div>
-      <form id="ai-form" class="p-4 border-t flex gap-2">
-        <input type="text" id="ai-input" placeholder="Ask about ingredients..." class="flex-grow bg-cream/30 rounded-xl px-4 text-xs focus:ring-1 focus:ring-sage border-none">
+      <form id="ai-form" class="p-4 border-t bg-white flex gap-2">
+        <input type="text" id="ai-input" placeholder="Ask about ingredients..." class="flex-grow bg-cream/50 rounded-xl px-4 py-3 text-xs focus:ring-1 focus:ring-sage outline-none border-none">
         <button type="submit" class="w-10 h-10 bg-sage text-white rounded-xl flex items-center justify-center"><i data-lucide="send" class="w-4 h-4"></i></button>
       </form>
     </div>
   </div>
 
+  <script type="module">
+    import { GoogleGenAI } from "https://esm.sh/@google/genai@^1.41.0";
+
+    // --- DATA ---
+    const INGREDIENTS = [
+      { name: "Cupuaçu Butter", source: "Amazon Rainforest", function: "Moisture Retention", benefit: "Absorbs 440% its weight in water, acting as a deep hydration powerhouse." },
+      { name: "Jojoba Oil", source: "Desert Shrub Seeds", function: "Barrier Protection", benefit: "Mimics natural skin oils to seal in moisture without being greasy." },
+      { name: "Candelilla Wax", source: "Desert Succulent", function: "Vegan Sealant", benefit: "A smooth, plant-based glide that creates a breathable protective layer." },
+      { name: "Vitamin E", source: "Sunflower Seeds", function: "Antioxidant", benefit: "Provides defense against environmental stressors for lip skin." },
+      { name: "Castor Seed Oil", source: "Ricinus Communis", function: "High Shine", benefit: "Creates a luminous, dewy finish while deeply softening textures." }
+    ];
+
+    const PRODUCTS = [
+      { id: "dew-stick", name: "The Dew Stick", price: 1499, image: "https://i.ibb.co/twdxvzTy/Screenshot-2026-02-13-172401.png", description: "Our hero hydration stick for a sheer, all-day luminous finish.", ingredients: INGREDIENTS.slice(0, 4) },
+      { id: "natural-lipstick", name: "Natural Lipstick", price: 2499, image: "https://i.ibb.co/ccr3qvj8/Screenshot-2026-02-13-172938.png", description: "Luxury satin finish powered by botanical pigments and organic Jojoba oil.", ingredients: [INGREDIENTS[1], INGREDIENTS[4]] },
+      { id: "night-mask", name: "The Night Mask", price: 2199, image: "https://i.ibb.co/kV3csC8X/Screenshot-2026-02-13-172249.png", description: "Intensive overnight repair with a calming hint of Amazonian butter.", ingredients: INGREDIENTS.slice(0, 3) }
+    ];
+
+    // --- APP STATE ---
+    const state = {
+      cart: [],
+      purchaseMode: 'one-time',
+      aiChat: null,
+      selectedProductId: null
+    };
+
+    // --- ROUTER ---
+    window.router = {
+      navigate: (view, productId = null) => {
+        document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+        const active = document.getElementById(`view-${view}`);
+        active.classList.add('active');
+        window.scrollTo(0, 0);
+        
+        if (view === 'home') renderHome();
+        if (view === 'product') renderProduct(productId);
+        if (view === 'glossary') renderGlossary();
+        lucide.createIcons();
+      }
+    };
+
+    // --- UI HELPERS ---
+    window.ui = {
+      toggleCart: (show) => document.getElementById('cart-drawer').classList.toggle('hidden', !show),
+      toggleAI: (show) => document.getElementById('ai-window').classList.toggle('hidden', !show),
+      setMode: (mode) => {
+        state.purchaseMode = mode;
+        renderProduct(state.selectedProductId);
+      },
+      addToCart: (id) => {
+        const p = PRODUCTS.find(x => x.id === id);
+        const isSub = state.purchaseMode === 'subscribe';
+        const price = isSub ? p.price * 0.85 : p.price;
+        const existing = state.cart.find(item => item.id === id && item.isSub === isSub);
+        if (existing) existing.qty++;
+        else state.cart.push({ ...p, price, isSub, qty: 1 });
+        updateCart();
+        ui.toggleCart(true);
+      },
+      updateQty: (id, isSub, delta) => {
+        const item = state.cart.find(x => x.id === id && x.isSub === isSub);
+        if (item) {
+          item.qty += delta;
+          if (item.qty < 1) state.cart = state.cart.filter(x => x !== item);
+        }
+        updateCart();
+      }
+    };
+
+    const format = (p) => `₹${p.toLocaleString('en-IN')}`;
+
+    // --- RENDERERS ---
+    function renderHome() {
+      const el = document.getElementById('view-home');
+      el.innerHTML = `
+        <section class="fade-in flex flex-col lg:flex-row items-center min-h-[90vh]">
+          <div class="w-full lg:w-1/2 px-8 lg:px-32 py-20">
+            <span class="inline-block py-1 px-3 bg-sage/10 text-sage text-[9px] font-bold tracking-widest uppercase mb-8 rounded-full">Botanical Soul</span>
+            <h1 class="text-7xl lg:text-9xl font-serif font-light leading-none mb-10 text-charcoal">Pure Care. <br /><span class="text-terracotta italic">True Glow.</span></h1>
+            <p class="text-sm text-charcoal/50 mb-12 max-w-sm leading-relaxed">High-performance essentials crafted with only 10 plant-based ingredients. Minimalist by design, powerful by nature.</p>
+            <button onclick="router.navigate('product', 'dew-stick')" class="bg-terracotta text-white px-12 py-5 rounded-2xl font-bold uppercase text-[10px] tracking-widest shadow-2xl">Shop The Collection</button>
+          </div>
+          <div class="w-full lg:w-1/2 h-[70vh] lg:h-[90vh] bg-white flex items-center justify-center">
+            <img src="https://i.ibb.co/nN6p4mNy/Screenshot-2026-02-13-173117.png" class="w-full h-full object-cover">
+          </div>
+        </section>
+        <section class="py-32 px-6 max-w-7xl mx-auto">
+          <h2 class="text-4xl font-serif italic mb-16">The Essential Ritual</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            ${PRODUCTS.map(p => `
+              <div onclick="router.navigate('product', '${p.id}')" class="group cursor-pointer">
+                <div class="aspect-square rounded-[2.5rem] overflow-hidden border border-charcoal/5 mb-8">
+                  <img src="${p.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="flex justify-between items-center mb-3">
+                  <h3 class="font-bold uppercase text-[11px] tracking-widest">${p.name}</h3>
+                  <span class="text-terracotta font-bold text-xs">${format(p.price)}</span>
+                </div>
+                <p class="text-[11px] text-charcoal/40 leading-relaxed">${p.description}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderProduct(id) {
+      state.selectedProductId = id;
+      const p = PRODUCTS.find(x => x.id === id);
+      const el = document.getElementById('view-product');
+      const isOneTime = state.purchaseMode === 'one-time';
+      
+      el.innerHTML = `
+        <div class="max-w-7xl mx-auto px-6 py-20 fade-in">
+          <button onclick="router.navigate('home')" class="text-[10px] font-bold uppercase tracking-widest text-sage mb-12 flex items-center gap-2">← Back to Shop</button>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-24">
+            <div class="aspect-[4/5] bg-white rounded-[3.5rem] overflow-hidden shadow-2xl border border-sage/5">
+              <img src="${p.image}" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <h1 class="text-7xl font-serif italic mb-10 text-charcoal">${p.name}</h1>
+              <p class="text-lg text-charcoal/60 mb-12 leading-relaxed">${p.description}</p>
+              
+              <div class="space-y-4 mb-12">
+                <div onclick="ui.setMode('one-time')" class="p-8 rounded-[2rem] border-2 cursor-pointer transition-all ${isOneTime ? 'border-sage bg-white shadow-xl' : 'border-sage/10'} flex justify-between items-center">
+                  <span class="font-bold uppercase tracking-widest text-xs">One-time Order</span>
+                  <span class="font-black text-xl">${format(p.price)}</span>
+                </div>
+                <div onclick="ui.setMode('subscribe')" class="p-8 rounded-[2rem] border-2 cursor-pointer transition-all ${!isOneTime ? 'border-sage bg-white shadow-xl' : 'border-sage/10'} flex justify-between items-center">
+                  <div>
+                    <span class="font-bold uppercase tracking-widest text-xs block">Subscribe & Save 15%</span>
+                    <span class="text-[9px] text-sage font-black uppercase tracking-widest">Delivered Monthly</span>
+                  </div>
+                  <span class="font-black text-xl text-sage">${format(p.price * 0.85)}</span>
+                </div>
+              </div>
+
+              <button onclick="ui.addToCart('${p.id}')" class="w-full bg-terracotta text-white py-8 rounded-[2.5rem] font-black uppercase tracking-widest text-xs shadow-2xl">Add to Garden Bag</button>
+              
+              <div class="mt-16 pt-12 border-t border-charcoal/5">
+                <h4 class="font-bold uppercase text-[10px] tracking-widest text-charcoal/40 mb-10">Ingredient Profile</h4>
+                <div class="flex flex-wrap gap-4">
+                  ${p.ingredients.map(ing => `
+                    <div class="ingredient-tooltip relative">
+                      <span class="px-6 py-3 rounded-full border border-sage/20 text-[10px] uppercase font-bold cursor-help hover:bg-sage hover:text-white transition-all">${ing.name}</span>
+                      <div class="tooltip-content absolute bottom-full left-0 mb-6 w-72 p-8 bg-white rounded-[2rem] shadow-2xl border border-sage/10 z-50">
+                        <p class="text-[9px] font-black text-sage uppercase tracking-widest mb-3">${ing.function}</p>
+                        <p class="text-[11px] text-charcoal/70 italic leading-relaxed">"${ing.benefit}"</p>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    function renderGlossary() {
+      const el = document.getElementById('view-glossary');
+      el.innerHTML = `
+        <section class="py-32 px-6 bg-white border-b border-sage/10 fade-in text-center">
+          <h1 class="text-7xl font-serif italic mb-10 tracking-tight">Ingredient Glossary</h1>
+          <p class="text-xl text-charcoal/50 mb-16 max-w-2xl mx-auto leading-relaxed">Explore the 10 plant-derived ingredients that make our formulas high-performance.</p>
+          <div class="max-w-xl mx-auto relative">
+            <input type="text" id="glossary-search" placeholder="Search ingredients..." class="w-full px-16 py-7 rounded-[2.5rem] bg-cream/50 italic text-sm outline-none border-none shadow-inner">
+          </div>
+        </section>
+        <div class="py-32 px-6 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12" id="glossary-grid">
+          ${INGREDIENTS.map(ing => `
+            <div class="bg-white p-12 rounded-[3.5rem] border border-sage/10 hover:shadow-2xl transition-all group">
+              <h3 class="text-3xl font-serif italic mb-4 group-hover:text-sage transition-colors">${ing.name}</h3>
+              <span class="text-[9px] font-black uppercase text-sage bg-sage/5 px-3 py-1.5 rounded-full inline-block mb-10 tracking-widest">${ing.function}</span>
+              <p class="text-sm font-medium text-charcoal/40 uppercase tracking-widest mb-2">Source: ${ing.source}</p>
+              <p class="text-[13px] italic text-charcoal/60 leading-relaxed">"${ing.benefit}"</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      document.getElementById('glossary-search').oninput = (e) => {
+        const query = e.target.value.toLowerCase();
+        const items = INGREDIENTS.filter(i => i.name.toLowerCase().includes(query));
+        document.getElementById('glossary-grid').innerHTML = items.map(ing => `
+           <div class="bg-white p-12 rounded-[3.5rem] border border-sage/10 hover:shadow-2xl transition-all group">
+              <h3 class="text-3xl font-serif italic mb-4 group-hover:text-sage transition-colors">${ing.name}</h3>
+              <span class="text-[9px] font-black uppercase text-sage bg-sage/5 px-3 py-1.5 rounded-full inline-block mb-10 tracking-widest">${ing.function}</span>
+              <p class="text-sm font-medium text-charcoal/40 uppercase tracking-widest mb-2">Source: ${ing.source}</p>
+              <p class="text-[13px] italic text-charcoal/60 leading-relaxed">"${ing.benefit}"</p>
+            </div>
+        `).join('');
+      };
+    }
+
+    function updateCart() {
+      const subtotal = state.cart.reduce((s, i) => s + (i.price * i.qty), 0);
+      const totalQty = state.cart.reduce((s, i) => s + i.qty, 0);
+      
+      const badge = document.getElementById('cart-badge');
+      badge.innerText = totalQty;
+      badge.classList.toggle('hidden', totalQty === 0);
+
+      const itemsEl = document.getElementById('cart-items');
+      if (state.cart.length === 0) {
+        itemsEl.innerHTML = `<p class="text-center font-serif italic text-charcoal/20 py-20 text-2xl">Your garden bag is empty.</p>`;
+        document.getElementById('cart-footer').innerHTML = '';
+        document.getElementById('free-shipping-bar').innerHTML = '';
+      } else {
+        itemsEl.innerHTML = state.cart.map(item => `
+          <div class="flex gap-6 fade-in">
+            <div class="w-24 h-24 bg-cream rounded-3xl overflow-hidden border border-sage/10 flex-shrink-0"><img src="${item.image}" class="w-full h-full object-cover"></div>
+            <div class="flex-grow">
+              <div class="flex justify-between items-start mb-2"><h4 class="font-bold text-xs uppercase tracking-widest">${item.name}</h4><span class="font-bold text-terracotta text-sm">${format(item.price)}</span></div>
+              <span class="text-[9px] font-black uppercase text-sage mb-4 block">${item.isSub ? 'Monthly Bloom (15% off)' : 'One-time Essential'}</span>
+              <div class="flex items-center border border-sage/20 rounded-xl px-4 py-2 w-fit gap-4">
+                <button onclick="ui.updateQty('${item.id}', ${item.isSub}, -1)" class="hover:text-terracotta"><i data-lucide="minus" class="w-3 h-3"></i></button>
+                <span class="text-xs font-bold">${item.qty}</span>
+                <button onclick="ui.updateQty('${item.id}', ${item.isSub}, 1)" class="hover:text-terracotta"><i data-lucide="plus" class="w-3 h-3"></i></button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        const threshold = 3000;
+        const remaining = Math.max(0, threshold - subtotal);
+        document.getElementById('free-shipping-bar').innerHTML = `
+          <p class="text-[10px] font-bold uppercase tracking-[0.2em] mb-3 text-center">${remaining > 0 ? `Spend ${format(remaining)} more for Free Shipping` : 'Your Free Shipping is Unlocked 🍃'}</p>
+          <div class="h-1.5 bg-sage/10 rounded-full overflow-hidden shadow-inner"><div class="h-full bg-sage transition-all duration-1000" style="width: ${Math.min(100, (subtotal/threshold)*100)}%"></div></div>
+        `;
+
+        document.getElementById('cart-footer').innerHTML = `
+          <div class="flex justify-between font-bold mb-8 italic font-serif text-2xl px-2"><span>Subtotal</span><span>${format(subtotal)}</span></div>
+          <button class="w-full bg-charcoal text-white py-6 rounded-[2rem] font-black uppercase text-[10px] tracking-widest shadow-2xl">Proceed to Checkout</button>
+        `;
+      }
+      lucide.createIcons();
+    }
+
+    // --- AI LOGIC ---
+    async function initAI() {
+      if (state.aiChat) return;
+      try {
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        state.aiChat = ai.chats.create({
+          model: 'gemini-3-flash-preview',
+          config: {
+            systemInstruction: "You are the Flora Guide for Vela Flora. Be calm, botanical, and minimalist. Help with products and ingredients. Keep answers under 3 sentences.",
+            temperature: 0.7
+          }
+        });
+        addAIMessage('model', "Welcome to the garden. I am your Flora Guide. How may I assist your skincare ritual today?");
+      } catch (err) { console.error("AI Init Error", err); }
+    }
+
+    function addAIMessage(role, text) {
+      const el = document.getElementById('ai-messages');
+      const div = document.createElement('div');
+      div.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'} fade-in`;
+      div.innerHTML = `<div class="max-w-[85%] px-4 py-3 rounded-2xl text-[11px] font-medium shadow-sm ${role === 'user' ? 'bg-terracotta text-white rounded-tr-none' : 'bg-white border border-sage/10 text-charcoal rounded-tl-none'}">${text}</div>`;
+      el.appendChild(div);
+      el.scrollTop = el.scrollHeight;
+    }
+
+    // --- BOOTSTRAP ---
+    document.addEventListener('DOMContentLoaded', () => {
+      router.navigate('home');
+      
+      const aiBtn = document.getElementById('ai-toggle');
+      aiBtn.onclick = () => { ui.toggleAI(true); initAI(); };
+
+      document.getElementById('ai-form').onsubmit = async (e) => {
+        e.preventDefault();
+        const input = document.getElementById('ai-input');
+        const text = input.value.trim();
+        if (!text || !state.aiChat) return;
+        addAIMessage('user', text);
+        input.value = '';
+        try {
+          const response = await state.aiChat.sendMessage({ message: text });
+          addAIMessage('model', response.text);
+        } catch (err) { addAIMessage('model', "The garden is quiet. Please try again later. 🍃"); }
+      };
+
+      updateCart();
+    });
+  </script>
 </body>
 </html>
